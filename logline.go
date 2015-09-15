@@ -30,7 +30,10 @@ func NewLogLineFromLpx(lp *lpx.Reader) *LogLine {
 
 // Err returns the logplex error struct if this logline is one.
 func (l *LogLine) Err() *LogplexError {
-	if l.Name == "heroku" && l.ProcID == "logplex" {
+	isLogplex := l.Name == "heroku" && l.ProcID == "logplex"
+	isLogShuttle := l.Name == "app" && l.ProcID == "log-shuttle"
+
+	if isLogplex || isLogShuttle {
 		lerr, err := parseLogplexError(l.Data)
 		if err != nil {
 			// XXX: not sure what to do with this.
