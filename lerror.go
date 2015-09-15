@@ -16,7 +16,7 @@ func parseLogplexError(msg string) (*LogplexError, error) {
 	// Data:Error L10 (output buffer overflow):
 	//    491 messages dropped since 2015-09-15T16:22:24+00:00.
 	r := regexp.MustCompile(
-		`Error L(?P<num>\d+) .*\: (?P<count>\d+) .*`).FindAllStringSubmatch(msg, -1)
+		`Error L(?P<num>\d+).*\: (?P<count>\d+) .*`).FindAllStringSubmatch(msg, -1)
 	if len(r) < 1 || len(r[0]) < 3 {
 		return nil, fmt.Errorf("invalid lerror line")
 	}
