@@ -1,6 +1,7 @@
 package drain
 
 import (
+	"fmt"
 	"github.com/bmizerany/lpx"
 )
 
@@ -37,7 +38,7 @@ func (l *LogLine) Err() *LogplexError {
 		lerr, err := parseLogplexError(l.Data)
 		if err != nil {
 			// XXX: not sure what to do with this.
-			panic(err)
+			panic(fmt.Sprintf("Error %v when parsing %v", err, l.Data))
 		}
 		return lerr
 	}
