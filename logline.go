@@ -27,3 +27,16 @@ func NewLogLineFromLpx(lp *lpx.Reader) *LogLine {
 		string(data),
 	}
 }
+
+// Err returns the logplex error struct if this logline is one.
+func (l *LogLine) Err() *LogplexError {
+	if l.Name == "heroku" && l.ProcID == "logplex" {
+		lerr, err := parseLogplexError(l.Data)
+		if err != nil {
+			// XXX: not sure what to do with this.
+			panic(err)
+		}
+		return lerr
+	}
+	return nil
+}
